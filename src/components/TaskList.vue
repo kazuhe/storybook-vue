@@ -1,14 +1,23 @@
 <template>
   <div class="list-items">
     <template v-if="loading">
-      loading
+      <div v-for="n in 6" :key="n" class="loading-item">
+       <span class="glow-checkbox" />
+       <span class="glow-text"> <span>Loading</span> <span>cool</span> <span>state</span> </span>
+     </div>
     </template>
+    
     <template v-else-if="isEmpty">
-      empty
+      <div class="wrapper-message">
+       <span class="icon-check" />
+       <div class="title-message">You have no tasks</div>
+       <div class="subtitle-message">Sit back and relax</div>
+     </div>
     </template>
+
     <template v-else>
       <Task
-        v-for="task in tasks"
+        v-for="task in tasksInOrder"
         :key="task.id"
         :task="task"
         @archive-task="onArchiveTask"
@@ -41,6 +50,13 @@ export default {
     props = ref(props)
     return {
       isEmpty: computed(() => props.value.tasks.length === 0),
+      tasksInOrder: computed(() => {
+        // ステータスがPinnedのタスクを先に展開
+        return [
+          ...props.value.tasks.filter((t) => t.state === 'TASK_PINNED'),
+          ...props.value.tasks.filter((t) => t.state !== 'TASK_PINNED')
+        ]
+      }),
 
       onArchiveTask(taskId) {
         emit('archive-task', taskId)
