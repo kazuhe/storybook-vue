@@ -2,17 +2,19 @@
   <div class="list-items">
     <template v-if="loading">
       <div v-for="n in 6" :key="n" class="loading-item">
-       <span class="glow-checkbox" />
-       <span class="glow-text"> <span>Loading</span> <span>cool</span> <span>state</span> </span>
-     </div>
+        <span class="glow-checkbox" />
+        <span class="glow-text">
+          <span>Loading</span> <span>cool</span> <span>state</span>
+        </span>
+      </div>
     </template>
-    
+
     <template v-else-if="isEmpty">
       <div class="wrapper-message">
-       <span class="icon-check" />
-       <div class="title-message">You have no tasks</div>
-       <div class="subtitle-message">Sit back and relax</div>
-     </div>
+        <span class="icon-check" />
+        <div class="title-message">You have no tasks</div>
+        <div class="subtitle-message">Sit back and relax</div>
+      </div>
     </template>
 
     <template v-else>
@@ -38,12 +40,12 @@ export default {
     tasks: {
       type: Array,
       required: true,
-      default: () => []
+      default: () => [],
     },
     loading: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   emits: ['archive-task', 'pin-task'],
   setup(props, { emit }) {
@@ -54,7 +56,7 @@ export default {
         // ステータスがPinnedのタスクを先に展開
         return [
           ...props.value.tasks.filter((t) => t.state === 'TASK_PINNED'),
-          ...props.value.tasks.filter((t) => t.state !== 'TASK_PINNED')
+          ...props.value.tasks.filter((t) => t.state !== 'TASK_PINNED'),
         ]
       }),
 
@@ -64,7 +66,7 @@ export default {
 
       onPinTask(taskId) {
         emit('pin-task', taskId)
-      }
+      },
     }
   },
 }

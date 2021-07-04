@@ -1,14 +1,16 @@
-import TaskList from './TaskList.vue';
-import * as TaskStories from './Task.stories';
+import TaskList from './TaskList.vue'
+import * as TaskStories from './Task.stories'
 
 export default {
   component: TaskList,
   title: 'TaskList',
-  decorators: [() => ({ template: '<div style="margin: 3em;"><story/></div>' })],
+  decorators: [
+    () => ({ template: '<div style="margin: 3em;"><story/></div>' }),
+  ],
   argTypes: {
     onPinTask: {},
     onArchiveTask: {},
-  }
+  },
 }
 
 const Template = (args) => ({
@@ -16,7 +18,7 @@ const Template = (args) => ({
   setup() {
     return { args, ...TaskStories.actionsData }
   },
-  template: '<TaskList v-bind="args" />'
+  template: '<TaskList v-bind="args" />',
 })
 
 export const Default = Template.bind({})
